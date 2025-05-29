@@ -1,5 +1,6 @@
 const {Client, IntentsBitField} = require('discord.js');   
 require('dotenv').config();
+require('./keep_alive.js');
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
