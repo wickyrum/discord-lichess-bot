@@ -3,7 +3,7 @@ const { Client, IntentsBitField } = require('discord.js');
 
 
 
-const lichess_post_url = `https://lichess.org/api/swiss/new/${process.env.TEAM_ID}`
+const lichess_post_url = `https://lichess.org/api/swiss/new/${{ secrets.TEAM_ID}}`
 const start_time = new Date(Date.now() + 30 * 60 * 1000).toISOString(); // 30 minutes from now
 const data = {
     "name": "Friendly Rapid Showdown",
@@ -18,7 +18,7 @@ const data = {
 }
 
 const headers = {
-    "Authorization": `Bearer ${process.env.LICHESS_TOKEN}`,
+    "Authorization": `Bearer ${{ secrets.LICHESS_TOKEN }}`,
     "Content-Type": "application/x-www-form-urlencoded"
 }
 
