@@ -2,7 +2,7 @@ name: Run JS Every Sunday
 
 on:
   schedule:
-    - cron: '20 15 * * 5'  # 
+    - cron: '30 15 * * 5'  # 
   workflow_dispatch:       # Manual run button
 
 jobs:
