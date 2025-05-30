@@ -57,6 +57,7 @@ client.once('ready', async () => {
     const channel = await client.channels.fetch(channelId);
     if (channel && channel.isTextBased()) {
         channel.send(`${tourney.name} starts in thirty minutes! Here is the link to the tournament: https://lichess.org/swiss/${tourney.id}`);
+        process.exit(0)
     } else {
         console.error('Channel not found or is not a text channel.');
     }
