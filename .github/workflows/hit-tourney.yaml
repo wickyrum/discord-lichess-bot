@@ -24,4 +24,8 @@ jobs:
     - name: Run JavaScript file
       env:
         DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        LICHESS_TOKEN: ${{ secrets.LICHESS_TOKEN }}
+        TEAM_ID: ${{ secrets.TEAM_ID }}
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+    
       run: node src/create-tournament.js
