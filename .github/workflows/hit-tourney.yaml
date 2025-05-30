@@ -27,5 +27,6 @@ jobs:
         LICHESS_TOKEN: ${{ secrets.LICHESS_TOKEN }}
         TEAM_ID: ${{ secrets.TEAM_ID }}
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
     
       run: node src/create-tournament.js
