@@ -1,0 +1,27 @@
+name: Run JS Every Sunday
+
+on:
+  schedule:
+    - cron: '30 13 * * 0'  # Runs every Sunday at 13:30 UTC
+  workflow_dispatch:       # Manual run button
+
+jobs:
+  run-js:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run JavaScript file
+      env:
+        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      run: node create_tournament.js
