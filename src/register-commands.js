@@ -147,7 +147,7 @@ const rest = new REST({version: '10'}).setToken(process.env.DISCORD_TOKEN);
     try {
         console.log('starting putting commands')
         await rest.put(
-            Routes.applicationGuildCommands(process.env.BOT_ID, process.env.SERVER_ID),
+            Routes.applicationCommands(process.env.BOT_ID),
             {body: commands},
         )
         console.log('Successfully registered application commands.');
