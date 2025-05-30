@@ -52,15 +52,19 @@ const client = new Client({
 
 client.once('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    const tourney = await createTournament();
-    const channelId = process.env.CHANNEL_ID
-    const channel = await client.channels.fetch(channelId);
-    if (channel && channel.isTextBased()) {
-        channel.send(`${tourney.name} starts in thirty minutes! Here is the link to the tournament: https://lichess.org/swiss/${tourney.id}`);
-        process.exit(0)
-    } else {
-        console.error('Channel not found or is not a text channel.');
+    try {
+        const tourney = await createTournament();
+        const channelId = process.env.CHANNEL_ID;
+        const channel = await client.channels.fetch(channelId);
+        if (channel && channel.isTextBased()) {
+            await channel.send(`${tourney.name} starts in thirty minutes! Here is the link to the tournament: https://lichess.org/swiss/${tourney.id}`);
+        } else {
+            console.error('Channel not found or is not a text channel.');
+        }
+    } catch (err) {
+        console.error('Error:', err);
     }
+    process.exit(0); // Exit after sending the message or on error
 });
 
 client.login(process.env.DISCORD_TOKEN)
