@@ -24,4 +24,4 @@ jobs:
     - name: Run JavaScript file
       env:
         DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-      run: /src/node create_tournament.js
+      run: node /src/create_tournament.js
