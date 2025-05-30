@@ -53,7 +53,7 @@ const client = new Client({
 client.once('ready', async () => {
     console.log(`Logged in as ${client.user.tag}!`);
     const tourney = await createTournament();
-    const channelId = process.env.CHANNEL_ID
+    const channelId = '959416923878195202'
     const channel = await client.channels.fetch(channelId);
     if (channel && channel.isTextBased()) {
         channel.send(`${tourney.name} starts in thirty minutes! Here is the link to the tournament: https://lichess.org/swiss/${tourney.id}`);
