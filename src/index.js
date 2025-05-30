@@ -1,6 +1,8 @@
 const {Client, IntentsBitField} = require('discord.js');   
+const createTournament = require('./create-tournament.js');
 require('dotenv').config();
 require('./keep_alive.js');
+
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
