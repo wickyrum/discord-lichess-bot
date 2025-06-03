@@ -58,14 +58,6 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 }); 
 
-client.on('interactionCreate', (interaction) => {
-    if (interaction.commandName === 'mame') {
-        interaction.reply('sollu mame');
-    }
-    if (interaction.commandName === 'vanakkam') {
-        interaction.reply('vanakkam sollu mame');
-    }   
-})
 
 client.on('interactionCreate', challengeHandler)
 
