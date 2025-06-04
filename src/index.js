@@ -51,7 +51,8 @@ async function challengeHandler(interaction) {
             return;
         }
         if (channel.isTextBased()) {
-            await channel.send({ embeds: [helpEmbed] });
+            // await channel.send({ embeds: [helpEmbed] });
+            interaction.reply({ embeds: [helpEmbed] });
         } else {
             console.error('Channel is not a text channel.');
         }
