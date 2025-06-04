@@ -1,5 +1,4 @@
-const {Client, IntentsBitField} = require('discord.js');   
-const createTournament = require('./create-tournament.js');
+const {Client, IntentsBitField, Embed} = require('discord.js');   
 require('dotenv').config();
 require('./keep_alive.js');
 
@@ -12,6 +11,21 @@ const client = new Client({
     ]
 })
 
+const helpEmbed = {
+    color: 0x0099ff,
+    title: 'Helper',
+    description: 'lichess-bot commands and usage',
+    fields: [
+        {
+            name: '/create-challenge',
+            value: 'Creates a new lichess challenge. Use subcommands to specify the type of challenge (rapid, blitz, bullet) and set the clock and increment times.',
+        },
+        {
+            name: '/help',
+            value: 'Displays this help message.',
+        },
+    ],
+}
 async function challengeHandler(interaction) {  
     if (!interaction.isCommand()) return;
 
@@ -26,6 +40,21 @@ async function challengeHandler(interaction) {
         const lichessObj = await lichessCall(subcommand, clock, increment)
         await interaction.reply(`${subcommand} match has been created, here is the link ${lichessObj}`)
 
+    }
+
+    if (interaction.commandName === 'help') {
+        console.log(interaction)
+        channelid = interaction.channelId
+        const channel = await client.channels.fetch(channelid);
+        if (!channel) {
+            console.error('Channel not found');
+            return;
+        }
+        if (channel.isTextBased()) {
+            await channel.send({ embeds: [helpEmbed] });
+        } else {
+            console.error('Channel is not a text channel.');
+        }
     }
 }
 
