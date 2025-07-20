@@ -1,5 +1,6 @@
 require('dotenv').config();
 const cron = require('node-cron')
+console.log(cron.schedule)
 const { Client, IntentsBitField } = require('discord.js');
 
 
@@ -21,7 +22,6 @@ const headers = {
     "Authorization": `Bearer ${process.env.LICHESS_TOKEN}`,
     "Content-Type": "application/x-www-form-urlencoded"
 }
-
 async function createTournament() {
     const response = await fetch(lichess_post_url, {
         method: 'POST',
@@ -49,30 +49,20 @@ const client = new Client({
     ]
 })
 client.once('ready', async () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-    console.log("hello word2")
-    cron.schedule("30 1 * * 0", messagePut);
+    cron.schedule("10 23 * * 6", messagePut);
    })
 
 
 async function messagePut() {
     const tourney = await createTournament();
-    console.log("tournament called")
-    const channelId = "959416923878195202"
-    const channel = await client.channels.fetch(channelId);
-    console.log(channel)
-    console.log("channel fetched")
+    const channel = await client.channels.fetch(process.env.CHANNEL_ID);
     channel.send("hello world I come from a js script")
     if (channel && channel.isTextBased()) {
         await channel.send(`${tourney.name} starts in thirty minutes! Here is the link to the tournament: https://lichess.org/swiss/${tourney.id}`);
         process.exit(0); // Exit the process after sending the message
-        console.log("gotta exit")
     } else {
         console.error('Channel not found or is not a text channel.');
  
     }
-}
-function hello() {
-    console.log("helo 123")
 }
 client.login(process.env.DISCORD_TOKEN)

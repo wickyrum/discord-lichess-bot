@@ -150,10 +150,7 @@ const rest = new REST({version: '10'}).setToken(process.env.DISCORD_TOKEN);
 (async () => {
     try {
         console.log('starting putting commands')
-        await rest.put(
-            Routes.applicationCommands(process.env.BOT_ID),
-            {body: commands},
-        )
+        await rest.put( Routes.applicationCommands(process.env.BOT_ID), {body: commands})
         console.log('Successfully registered application commands.');
     } catch (error) {
         console.log(error);

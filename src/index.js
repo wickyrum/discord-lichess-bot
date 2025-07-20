@@ -92,3 +92,4 @@ client.on('ready', () => {
 client.on('interactionCreate', challengeHandler)
 
 client.login(process.env.DISCORD_TOKEN)
+
