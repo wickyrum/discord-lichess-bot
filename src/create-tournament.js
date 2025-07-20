@@ -48,9 +48,6 @@ const client = new Client({
         IntentsBitField.Flags.MessageContent,   
     ]
 })
-client.once('ready', async () => {
-    cron.schedule("10 23 * * 6", messagePut);
-   })
 
 
 async function messagePut() {
@@ -59,10 +56,10 @@ async function messagePut() {
     channel.send("hello world I come from a js script")
     if (channel && channel.isTextBased()) {
         await channel.send(`${tourney.name} starts in thirty minutes! Here is the link to the tournament: https://lichess.org/swiss/${tourney.id}`);
-        process.exit(0); // Exit the process after sending the message
     } else {
         console.error('Channel not found or is not a text channel.');
  
     }
 }
 client.login(process.env.DISCORD_TOKEN)
+module.exports = {messagePut}

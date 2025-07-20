@@ -1,4 +1,6 @@
 const {Client, IntentsBitField, Embed} = require('discord.js');   
+const {messagePut} = require('./create-tournament.js')
+const cron = require('node-cron')
 require('dotenv').config();
 require('./keep_alive.js');
 
@@ -77,7 +79,7 @@ async function lichessCall(sub_command, time, extra_time) {
         body: data,
     })
     const betaResponse = await alphaResponse.json()
-    console.log(betaResponse.url)
+    console.log(`response received: ${betaResponse}`)
     return betaResponse.url
     
 
@@ -92,4 +94,4 @@ client.on('ready', () => {
 client.on('interactionCreate', challengeHandler)
 
 client.login(process.env.DISCORD_TOKEN)
-
+cron.schedule("01 13 * * 7", messagePut);
