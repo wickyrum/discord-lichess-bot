@@ -94,4 +94,4 @@ client.on('ready', () => {
 client.on('interactionCreate', challengeHandler)
 
 client.login(process.env.DISCORD_TOKEN)
-cron.schedule("50 23 * * 1", messagePut);
+cron.schedule("04 00 * * 2", messagePut);
