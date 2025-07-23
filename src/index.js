@@ -94,4 +94,14 @@ client.on('ready', () => {
 client.on('interactionCreate', challengeHandler)
 
 client.login(process.env.DISCORD_TOKEN)
-cron.schedule("04 00 * * 2", messagePut);
+cron.schedule('18 07 * * 3', () => {
+  console.log(`[${new Date().toISOString()}] Cron job started`);
+  
+  try {
+    messagePut();
+    console.log(`[${new Date().toISOString()}] Cron job completed successfully`);
+  } catch (error) {
+    console.error(`[${new Date().toISOString()}] Cron job failed:`, error);
+    console.error('Stack trace:', error.stack);
+  }
+})
