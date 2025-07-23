@@ -1,4 +1,4 @@
-require('dotenv').conf15ig();
+require('dotenv').config();
 const cron = require('node-cron')
 console.log(cron.schedule)
 const { Client, IntentsBitField } = require('discord.js');
