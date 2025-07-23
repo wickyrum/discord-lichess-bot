@@ -94,7 +94,7 @@ client.on('ready', () => {
 client.on('interactionCreate', challengeHandler)
 
 client.login(process.env.DISCORD_TOKEN)
-cron.schedule('18 07 * * 3', () => {
+cron.schedule('00 14 * * 0', () => {
   console.log(`[${new Date().toISOString()}] Cron job started`);
   
   try {

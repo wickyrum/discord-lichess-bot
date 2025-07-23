@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').conf15ig();
 const cron = require('node-cron')
 console.log(cron.schedule)
 const { Client, IntentsBitField } = require('discord.js');
@@ -8,13 +8,13 @@ const lichess_post_url = `https://lichess.org/api/swiss/new/${process.env.TEAM_I
 const start_time = new Date(Date.now() + 30 * 60 * 1000).toISOString(); // 30 minutes from now
 const data = {
     "name": "Friendly Rapid Showdown",
-    "clock.limit": 15,
+    "clock.limit": 600,
     "clock.increment": 3,
     "nbRounds": 3,
     "startsAt": start_time,
     "roundInterval": 45,    
     "variant": "standard",
-    "description": "A fun blitz event for team members!",
+    "description": "A fun rapid event for team members!",
     "rated": "true"
 }
 
@@ -53,12 +53,10 @@ const client = new Client({
 async function messagePut() {
     const tourney = await createTournament();
     const channel = await client.channels.fetch(process.env.CHANNEL_ID);
-    channel.send("hello world I come from a js script")
     if (channel && channel.isTextBased()) {
         await channel.send(`${tourney.name} starts in thirty minutes! Here is the link to the tournament: https://lichess.org/swiss/${tourney.id}`);
     } else {
         console.error('Channel not found or is not a text channel.');
- 
     }
 }
 client.login(process.env.DISCORD_TOKEN)
