@@ -59,6 +59,9 @@ async function challengeHandler(interaction) {
             console.error('Channel is not a text channel.');
         }
     }
+    if (interaction.commandName === 'lichess_login') {
+        interaction.reply("you will be shown your way")
+    }
 }
 
 async function lichessCall(sub_command, time, extra_time) {
@@ -79,7 +82,7 @@ async function lichessCall(sub_command, time, extra_time) {
         body: data,
     })
     const betaResponse = await alphaResponse.json()
-    console.log(`response received: ${betaResponse}`)
+    console.log(`response received: ${betaResponse.challenger}`)
     return betaResponse.url
     
 

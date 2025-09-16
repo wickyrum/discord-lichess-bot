@@ -142,6 +142,10 @@ const commands = [
     {
         name: 'help',
         description: 'shows the help message',
+    },
+    {
+        name: 'lichess_login',
+        description: 'connects your lichess account to the chess bot',
     }
 ];
 
