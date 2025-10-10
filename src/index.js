@@ -24,7 +24,7 @@ const helpEmbed = {
         },
         {
             name: '/help',
-            value: 'Displays this help message.',
+            value: 'Displas this help message.',
         },
     ],
 }
@@ -37,11 +37,15 @@ async function challengeHandler(interaction) {
         const clock = interaction.options.getInteger('clock');
         let increment = interaction.options.getInteger('increment');
         if (increment === null) {
-            increment = 0; // Default to 0 if not provided
+            increment = 0; 
         }
         const lichessObj = await lichessCall(subcommand, clock, increment)
         await interaction.reply(`${subcommand} match has been created, here is the link ${lichessObj}`)
 
+    }
+    
+    if (interaction.commandName === 'login') {
+       interaction.reply('https://localhost:3000') 
     }
 
     if (interaction.commandName === 'help') {
@@ -53,7 +57,6 @@ async function challengeHandler(interaction) {
             return;
         }
         if (channel.isTextBased()) {
-            // await channel.send({ embeds: [helpEmbed] });
             interaction.reply({ embeds: [helpEmbed] });
         } else {
             console.error('Channel is not a text channel.');
