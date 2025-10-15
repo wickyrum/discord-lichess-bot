@@ -31,7 +31,7 @@ const helpEmbed = {
 async function challengeHandler(interaction) {  
     if (!interaction.isCommand()) return;
 
-
+    console.log(interaction)
     if (interaction.commandName === 'create-challenge') {
         const subcommand = interaction.options.getSubcommand();
         const clock = interaction.options.getInteger('clock');
@@ -43,9 +43,10 @@ async function challengeHandler(interaction) {
         await interaction.reply(`${subcommand} match has been created, here is the link ${lichessObj}`)
 
     }
-    
+
     if (interaction.commandName === 'login') {
-       interaction.reply('https://localhost:3000') 
+        interaction.reply('https://localhost:3000') 
+        const discord_username = interaction.user.username
     }
 
     if (interaction.commandName === 'help') {
@@ -74,9 +75,9 @@ async function lichessCall(sub_command, time, extra_time) {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
     const data = new URLSearchParams({
-    'name': `${sub_command} challenge`,
-    'clock.limit': time,
-    'clock.increment': extra_time,
+        'name': `${sub_command} challenge`,
+        'clock.limit': time,
+        'clock.increment': extra_time,
     });
 
     const alphaResponse = await fetch(url, {
@@ -87,7 +88,7 @@ async function lichessCall(sub_command, time, extra_time) {
     const betaResponse = await alphaResponse.json()
     console.log(`response received: ${betaResponse.challenger}`)
     return betaResponse.url
-    
+
 
 
 }
@@ -101,13 +102,14 @@ client.on('interactionCreate', challengeHandler)
 
 client.login(process.env.DISCORD_TOKEN)
 cron.schedule('00 14 * * 0', () => {
-  console.log(`[${new Date().toISOString()}] Cron job started`);
-  
-  try {
-    messagePut();
-    console.log(`[${new Date().toISOString()}] Cron job completed successfully`);
-  } catch (error) {
-    console.error(`[${new Date().toISOString()}] Cron job failed:`, error);
-    console.error('Stack trace:', error.stack);
-  }
+    console.log(`[${new Date().toISOString()}] Cron job started`);
+
+    try {
+        messagePut();
+        console.log(`[${new Date().toISOString()}] Cron job completed successfully`);
+    } catch (error) {
+        console.error(`[${new Date().toISOString()}] Cron job failed:`, error);
+        console.error('Stack trace:', error.stack);
+    }
 })
+module.exports = discord_username

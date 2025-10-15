@@ -2,6 +2,7 @@ const express = require('express')
 const session = require('express-session')
 const crypto = require('crypto')
 const pg = require('pg');
+const discord_username = require('./index.js')
 require('dotenv').config();
 
 const app = express()
@@ -80,7 +81,7 @@ app.get('/callback', async (req, res) => {
     }
 })
 
-async function dbUpload(lichessId, accessToken) {
+async function dbUpload(discord_username, lichessId, accessToken) {
     const pool = new pg.Pool({
         user: "postgres",
         host: "localhost",
@@ -88,9 +89,8 @@ async function dbUpload(lichessId, accessToken) {
         password: "lol",
         port: 5432,
     });
-    console.log(lichessId, accessToken)
-    const user = 'rAmp'
-    await pool.query(`insert into base (discord_username, lichess_username, access_token) values ($1, $2, $3)`, [user, lichessId+'a', accessToken])
+    console.log(discord_username, lichessId, accessToken)
+    await pool.query(`insert into base (discord_username, lichess_username, access_token) values ($1, $2, $3)`, [discord_username, lichessId, accessToken])
 
 }
 app.listen(process.env.PORT)
