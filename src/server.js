@@ -1,22 +1,19 @@
 const express = require('express')
 const session = require('express-session')
 const crypto = require('crypto')
-const pg = require('pg');
-const discord_username = require('./index.js')
+const {userUpload} = require('./postGres.js') 
+let server = undefined;
+let discord_usernameStore = undefined;
 require('dotenv').config();
 
 const app = express()
-const port = process.env.PORT
 const clientId = process.env.CLIENT_ID
-
 app.use(session({ resave: true, secret: 'SECRET', saveUninitialized: true }));
 
 app.get('/', (req, res) => {
     res.send('<a href="/login">Login</a>')
 })
-
-// /login
-const base64URLEncode = (str) => {  //encodes a string to be a proper base64URL
+const base64URLEncode = (str) => { 
     return str.toString('base64')
         .replace(/\+/g, '-')
         .replace(/\//g, '_')
@@ -64,7 +61,6 @@ app.get('/callback', async (req, res) => {
         const url = req.protocol + '://' + req.get('host') + req.baseUrl;
         const verifier = req.session.codeVerifier;
         const lichessToken = await getLichessToken(req.query.code, verifier, url)
-        console.log(lichessToken)
         console.log(lichessToken.access_token)
         if (!lichessToken.access_token) {
             res.send('Failed getting token');
@@ -72,8 +68,12 @@ app.get('/callback', async (req, res) => {
         }
 
         const lichessUser = await getLichessUser(lichessToken.access_token)
+        console.log(lichessUser.username)
+        console.log(lichessUser.id)
+        console.log(lichessUser.perfs.rapid.rating)
         res.send(`Logged in as ${lichessUser.username}`)
-        dbUpload(lichessUser.id, lichessToken.access_token)
+        userUpload(discord_usernameStore, lichessUser.username, lichessUser.perfs.rapid.rating, lichessToken.access_token)
+        server.close()
     }
     catch (error) {
         console.error('OAuth callback error:', error);
@@ -81,16 +81,8 @@ app.get('/callback', async (req, res) => {
     }
 })
 
-async function dbUpload(discord_username, lichessId, accessToken) {
-    const pool = new pg.Pool({
-        user: "postgres",
-        host: "localhost",
-        database: "lichessbot",
-        password: "lol",
-        port: 5432,
-    });
-    console.log(discord_username, lichessId, accessToken)
-    await pool.query(`insert into base (discord_username, lichess_username, access_token) values ($1, $2, $3)`, [discord_username, lichessId, accessToken])
-
+async function loginBack(discord_username) {
+    server = app.listen(3002, () => console.log('Server has started')) 
+    discord_usernameStore = discord_username
 }
-app.listen(process.env.PORT)
+module.exports = {loginBack}

@@ -11,6 +11,12 @@ const commands = [
                 type: ApplicationCommandOptionType.Subcommand,
                 options: [
                     {
+                        name: 'user',
+                        description: 'name the user you want to challenge',
+                        type: ApplicationCommandOptionType.User,
+                        required: true,
+                    },
+                    {
                         name: 'clock',
                         description: 'sets the clock for the rapid challenge',
                         type: 4,
@@ -144,13 +150,8 @@ const commands = [
         description: 'shows the help message',
     },
     {
-<<<<<<< HEAD
-        name: 'lichess_login',
-        description: 'connects your lichess account to the chess bot',
-=======
         name: 'login',
         description: 'Connects your lichess to the bot',
->>>>>>> oauth
     }
 ];
 
